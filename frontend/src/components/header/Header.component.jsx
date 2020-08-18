@@ -98,7 +98,7 @@ class Header extends React.Component {
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to="/login">
+                  <Link to="/signin">
                     <NavLink className="badge badge-danger">Login</NavLink>
                   </Link>
                 </NavItem>
