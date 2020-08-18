@@ -1,0 +1,15 @@
+@import "../../utils/sass/variables";
+
+.hero-section {
+  width: 100%;
+  height: 86vh;
+  background: #d3d3d3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero {
+  width: 100%;
+}

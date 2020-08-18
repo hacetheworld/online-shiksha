@@ -1,9 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
+
+// Argon theme css files
+import "./assets/vendor/nucleo/css/nucleo.css";
+import "./assets/scss/argon-design-system-react.scss";
+import "./assets/vendor/font-awesome/css/font-awesome.min.css";
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
