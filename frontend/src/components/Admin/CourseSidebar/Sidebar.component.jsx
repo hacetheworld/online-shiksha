@@ -2,18 +2,18 @@ import React from "react";
 import "./Sidebar.style.scss";
 import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 
-import { Link } from "react-router-dom";
-import {
-  UncontrolledCollapse,
-  NavbarBrand,
-  Navbar,
-  NavItem,
-  NavLink,
-  Nav,
-  Container,
-  Row,
-  Col,
-} from "reactstrap";
+// import { Link } from "react-router-dom";
+// import {
+//   UncontrolledCollapse,
+//   NavbarBrand,
+//   Navbar,
+//   NavItem,
+//   NavLink,
+//   Nav,
+//   Container,
+//   Row,
+//   Col,
+// } from "reactstrap";
 
 export default function Sidebar() {
   return (
