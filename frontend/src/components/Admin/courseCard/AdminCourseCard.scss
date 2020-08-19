@@ -1,0 +1,28 @@
+.course-card-section {
+  background-color: #d3d3d3;
+}
+.player-wrapper {
+  position: relative;
+  padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+}
+
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.course-card {
+  //   width: 100%;
+
+  &-course-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: rgb(235, 15, 52);
+    padding: 1rem 0;
+  }
+
+  &-watchnowbutton button {
+    color: white !important;
+  }
+}

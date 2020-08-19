@@ -1,0 +1,25 @@
+@import "~react-pro-sidebar/dist/scss/styles.scss";
+
+.watch-course {
+  width: 100vw;
+
+  display: flex;
+  justify-content: space-between;
+
+  & -wrapper {
+    flex: 1;
+  }
+  .sidebar .pro-sidebar > .pro-sidebar-inner {
+    height: 88vh;
+  }
+  .sidebar .pro-sidebar > .pro-sidebar-inner,
+  .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item {
+    background-color: #525f7f !important;
+  }
+  .sidebar-wrapper {
+    flex: 1;
+  }
+  .main-video {
+    flex: 2;
+  }
+}
