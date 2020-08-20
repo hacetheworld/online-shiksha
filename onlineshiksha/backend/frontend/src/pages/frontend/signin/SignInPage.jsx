@@ -1,5 +1,6 @@
 import React from "react";
-
+import { connect } from "react-redux";
+import { userLoggedIn } from "../../../redux/actions/user.actions";
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
@@ -19,9 +20,50 @@ import {
   Col,
 } from "reactstrap";
 
-class Register extends React.Component {
-  state = {};
+class SignIn extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      password: "",
+    };
+  }
+
+  handle_login = (e) => {
+    console.log(this.state);
+
+    const data = {
+      username: this.state.username,
+      password: this.state.password,
+    };
+    e.preventDefault();
+    fetch("http://127.0.0.1:8000/token-auth/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+
+        localStorage.setItem("token", json.token);
+        this.props.userLoggedIn({
+          username: json.user.username,
+          isLoggedIn: true,
+        });
+      });
+  };
+
+  handleChange = (e) => {
+    const { value, name } = e.target;
+    this.setState({ [name]: value });
+  };
+
   render() {
+    console.log(this.props, "SignIn");
+
     return (
       <>
         <section className="section section-lg section-shaped">
@@ -77,23 +119,9 @@ class Register extends React.Component {
                     </CardHeader>
                     <CardBody className="px-lg-5 py-lg-5">
                       <div className="text-center text-muted mb-4">
-                        <small>Or Register New Account</small>
+                        <small>Or SignIn</small>
                       </div>
-                      <Form role="form">
-                        <FormGroup>
-                          <InputGroup className="input-group-alternative">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="ni ni-user-run" />
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              placeholder="Username"
-                              type="text"
-                              name="username"
-                            />
-                          </InputGroup>
-                        </FormGroup>
+                      <Form role="form" onSubmit={this.handle_login}>
                         <FormGroup>
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
@@ -102,14 +130,11 @@ class Register extends React.Component {
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                              placeholder="Email"
-                              type="email"
-                              onFocus={(e) =>
-                                this.setState({ emailFocused: true })
-                              }
-                              onBlur={(e) =>
-                                this.setState({ emailFocused: false })
-                              }
+                              placeholder="Username"
+                              type="text"
+                              name="username"
+                              onChange={this.handleChange}
+                              value={this.state.username}
                             />
                           </InputGroup>
                         </FormGroup>
@@ -123,13 +148,10 @@ class Register extends React.Component {
                             <Input
                               placeholder="Password"
                               type="password"
+                              name="password"
+                              onChange={this.handleChange}
+                              value={this.state.password}
                               autoComplete="off"
-                              onFocus={(e) =>
-                                this.setState({ passwordFocused: true })
-                              }
-                              onBlur={(e) =>
-                                this.setState({ passwordFocused: false })
-                              }
                             />
                           </InputGroup>
                         </FormGroup>
@@ -138,7 +160,7 @@ class Register extends React.Component {
                           <Button
                             className="my-4"
                             color="primary"
-                            type="button"
+                            type="submit"
                           >
                             Register
                           </Button>
@@ -159,4 +181,8 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.user.user.isLoggedIn,
+});
+
+export default connect(mapStateToProps, { userLoggedIn })(SignIn);

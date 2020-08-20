@@ -1,5 +1,7 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
+
 // reactstrap components
 import {
   UncontrolledCollapse,
@@ -12,9 +14,20 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { connect } from "react-redux";
+import { userLoggedOUT } from "../../redux/actions/user.actions";
 
 class AdminHeader extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  handle_logout = () => {
+    console.log(this.props);
+    localStorage.removeItem("token");
+    this.props.userLoggedOUT();
+  };
   render() {
+    const { username } = this.props;
     return (
       <>
         {/* Navbar primary */}
@@ -78,13 +91,19 @@ class AdminHeader extends React.Component {
                 </NavItem> */}
                 <NavItem>
                   <NavLink>
-                    <span className="text-white">Welcome @username</span>
+                    <span className="text-white">
+                      Welcome{" "}
+                      <span className="bage badge-danger"> {username}</span>
+                    </span>
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <Link to="/admin/logout">
-                    <NavLink className="badge badge-danger">Logout</NavLink>
-                  </Link>
+                  <NavLink
+                    className="badge badge-danger button-big"
+                    onClick={this.handle_logout}
+                  >
+                    Logout
+                  </NavLink>
                 </NavItem>
               </Nav>
             </UncontrolledCollapse>
@@ -95,4 +114,8 @@ class AdminHeader extends React.Component {
   }
 }
 
-export default AdminHeader;
+const mapStateToProps = (state) => ({
+  username: state.user.user.username,
+});
+
+export default connect(mapStateToProps, { userLoggedOUT })(AdminHeader);

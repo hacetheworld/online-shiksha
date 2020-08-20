@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+import os
 
 from pathlib import Path
 
@@ -37,11 +38,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # my own app
+    'students.apps.StudentsConfig',
+    'rest_framework',
+    'corsheaders',
+
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # Note that this needs to be placed above CommonMiddleware
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -54,7 +64,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend/build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -118,3 +128,31 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'frontend/build/static')
+]
+# If this is used then `CORS_ORIGIN_WHITELIST` will not have any effect
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+]  # If this is used, then not need to use `CORS_ORIGIN_ALLOW_ALL = True`
+CORS_ORIGIN_REGEX_WHITELIST = [
+    'http://localhost:3000',
+]
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+
+JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'backend.utils.my_jwt_response_handler'
+}

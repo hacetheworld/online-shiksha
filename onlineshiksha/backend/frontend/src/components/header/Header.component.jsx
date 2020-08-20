@@ -1,6 +1,9 @@
 import React from "react";
 import "./Header.style.scss";
 import { Link } from "react-router-dom";
+
+// use Redux
+import { connect } from "react-redux";
 // JavaScript plugin that hides or shows a component based on your scroll
 // import Headroom from "headroom.js";
 // reactstrap components
@@ -17,23 +20,12 @@ import {
 } from "reactstrap";
 
 class Header extends React.Component {
-  state = {
-    isUserLoggedIn: false,
-  };
-
-  // onExiting = () => {
-  //   this.setState({
-  //     collapseClasses: "collapsing-out",
-  //   });
-  // };
-
-  // onExited = () => {
-  //   this.setState({
-  //     collapseClasses: "",
-  //   });
-  // };
+  constructor(props) {
+    super(props);
+  }
 
   render() {
+    const { username, isLoggedIn } = this.props;
     return (
       <header className="header-global">
         <Navbar
@@ -51,13 +43,7 @@ class Header extends React.Component {
             <button className="navbar-toggler" id="navbar_global">
               <span className="navbar-toggler-icon" />
             </button>
-            <UncontrolledCollapse
-              toggler="#navbar_global"
-              navbar
-              className={this.state.collapseClasses}
-              // onExiting={this.onExiting}
-              // onExited={this.onExited}
-            >
+            <UncontrolledCollapse toggler="#navbar_global" navbar>
               <div className="navbar-collapse-header">
                 <Row>
                   <Col className="collapse-brand" xs="6">
@@ -92,16 +78,24 @@ class Header extends React.Component {
                 className="ml-auto navbar-nav-hover align-items-lg-center"
                 navbar
               >
-                <NavItem>
-                  <Link to="/register">
-                    <NavLink className="badge badge-danger">Register</NavLink>
-                  </Link>
-                </NavItem>
-                <NavItem>
-                  <Link to="/signin">
-                    <NavLink className="badge badge-danger">Login</NavLink>
-                  </Link>
-                </NavItem>
+                {isLoggedIn === false ? (
+                  <>
+                    <NavItem>
+                      <Link to="/register">
+                        <NavLink className="badge badge-danger">
+                          Register
+                        </NavLink>
+                      </Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link to="/signin">
+                        <NavLink className="badge badge-danger">Login</NavLink>
+                      </Link>
+                    </NavItem>
+                  </>
+                ) : (
+                  <NavItem>{username}</NavItem>
+                )}
               </Nav>
             </UncontrolledCollapse>
           </Container>
@@ -111,4 +105,8 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+const mapStateToProps = ({ user }) => ({
+  username: user.user.username,
+  isLoggedIn: user.user.isLoggedIn,
+});
+export default connect(mapStateToProps)(Header);

@@ -13,10 +13,18 @@ import Register from "./register/RegisterPage";
 import SignIn from "./signin/SignInPage";
 
 class FrontView extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
+    const { handle_login, handle_signup, logged_in } = this.props;
     return (
       <>
-        <Header />
+        <Header
+          handle_login={this.handle_login}
+          handle_signup={this.handle_signup}
+          logged_in={logged_in}
+        />
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/courses" component={CoursesPage} />
