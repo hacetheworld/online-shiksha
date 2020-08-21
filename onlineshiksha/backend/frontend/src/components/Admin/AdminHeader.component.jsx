@@ -15,19 +15,43 @@ import {
   Col,
 } from "reactstrap";
 import { connect } from "react-redux";
-import { userLoggedOUT } from "../../redux/actions/user.actions";
+import { userLoggedIn, userLoggedOUT } from "../../redux/actions/user.actions";
 
 class AdminHeader extends React.Component {
   constructor(props) {
     super(props);
   }
+  componentDidMount() {
+    const jsonToken = localStorage.getItem("token");
+    if (jsonToken !== null) {
+      fetch("http://localhost:8000/api/current_user/", {
+        headers: {
+          Authorization: `JWT ${jsonToken}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          this.props.userLoggedIn({
+            username: json.username,
+            isLoggedIn: true,
+          });
+        });
+    } else {
+      this.props.userLoggedOUT({
+        username: "",
+        isLoggedIn: false,
+      });
+      this.props.history.push("/");
+    }
+  }
   handle_logout = () => {
-    console.log(this.props);
     localStorage.removeItem("token");
-    this.props.userLoggedOUT();
+    this.props.userLoggedOUT({ username: "", isLoggedIn: false });
   };
   render() {
     const { username } = this.props;
+    console.log(this.props);
+
     return (
       <>
         {/* Navbar primary */}
@@ -90,23 +114,21 @@ class AdminHeader extends React.Component {
                   </NavLink>
                 </NavItem> */}
                 <NavItem>
-                  <NavLink>
-                    <span className="text-white">
-                      Welcome{" "}
-                      <span className="bage badge-danger"> {username}</span>
-                    </span>
-                  </NavLink>
+                  <span className="text-white">
+                    Welcome{" "}
+                    <span className="bage badge-danger"> {username}</span>
+                  </span>
                 </NavItem>
                 <NavItem>
-                  <NavLink
-                    className="badge badge-danger button-big"
+                  <button
+                    className=" btn-lg border-0 bg-danger"
                     onClick={() => {
                       this.handle_logout();
                       this.props.history.push("/");
                     }}
                   >
                     Logout
-                  </NavLink>
+                  </button>
                 </NavItem>
               </Nav>
             </UncontrolledCollapse>
@@ -121,6 +143,6 @@ const mapStateToProps = (state) => ({
   username: state.user.user.username,
 });
 
-export default connect(mapStateToProps, { userLoggedOUT })(
+export default connect(mapStateToProps, { userLoggedIn, userLoggedOUT })(
   withRouter(AdminHeader)
 );

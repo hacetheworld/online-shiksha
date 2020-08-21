@@ -70,19 +70,13 @@ export default function Footer() {
           <Col md="6">
             <Nav className=" nav-footer justify-content-end">
               <NavItem>
-                <NavLink>
-                  <Link to="/">Ajay Meena</Link>
-                </NavLink>
+                <Link to="/">Ajay Meena</Link>
               </NavItem>
               <NavItem>
-                <NavLink>
-                  <Link to="/courses">Courses</Link>
-                </NavLink>
+                <Link to="/courses">Courses</Link>
               </NavItem>
               <NavItem>
-                <NavLink>
-                  <Link to="/">Legal</Link>
-                </NavLink>
+                <Link to="/">Legal</Link>
               </NavItem>
             </Nav>
           </Col>

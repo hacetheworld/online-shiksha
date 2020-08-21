@@ -1,6 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { userLoggedIn } from "../../../redux/actions/user.actions";
+import {
+  userLoggedIn,
+  userLoggedOUT,
+} from "../../../redux/actions/user.actions";
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
@@ -31,11 +34,11 @@ class Register extends React.Component {
   }
 
   componentDidMount() {
-    const userLoggedIn = localStorage.getItem("token");
-    if (userLoggedIn) {
-      fetch("http://localhost:8000/core/current_user/", {
+    const tokenExist = localStorage.getItem("token");
+    if (tokenExist !== null) {
+      fetch("http://localhost:8000/api/current_user/", {
         headers: {
-          Authorization: `JWT ${userLoggedIn}`,
+          Authorization: `JWT ${tokenExist}`,
         },
       })
         .then((res) => res.json())
@@ -45,12 +48,15 @@ class Register extends React.Component {
             isLoggedIn: true,
           });
         });
+    } else {
+      this.props.userLoggedOUT({
+        username: "",
+        isLoggedIn: false,
+      });
     }
   }
 
   handle_signup = (e) => {
-    console.log(this.state);
-
     const data = {
       username: this.state.username,
       email: this.state.email,
@@ -66,10 +72,11 @@ class Register extends React.Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
-
         localStorage.setItem("token", json.token);
         this.props.userLoggedIn({ username: json.username, isLoggedIn: true });
+      })
+      .catch((e) => {
+        alert(e.message);
       });
   };
 
@@ -79,8 +86,6 @@ class Register extends React.Component {
   };
 
   render() {
-    console.log(this.props, "register");
-
     return (
       <>
         <section className="section section-lg section-shaped">
@@ -218,4 +223,6 @@ const mapStateToProps = (state) => ({
   isLoggedIn: state.user.user.isLoggedIn,
 });
 
-export default connect(mapStateToProps, { userLoggedIn })(Register);
+export default connect(mapStateToProps, { userLoggedIn, userLoggedOUT })(
+  Register
+);

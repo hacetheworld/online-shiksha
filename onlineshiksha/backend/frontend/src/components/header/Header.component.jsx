@@ -1,9 +1,10 @@
 import React from "react";
 import "./Header.style.scss";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 // use Redux
 import { connect } from "react-redux";
+import { userLoggedIn, userLoggedOUT } from "../../redux/actions/user.actions";
 // JavaScript plugin that hides or shows a component based on your scroll
 // import Headroom from "headroom.js";
 // reactstrap components
@@ -22,6 +23,30 @@ import {
 class Header extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    const jsonToken = localStorage.getItem("token");
+    if (jsonToken !== null) {
+      fetch("http://localhost:8000/api/current_user/", {
+        headers: {
+          Authorization: `JWT ${jsonToken}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          this.props.userLoggedIn({
+            username: json.username,
+            isLoggedIn: true,
+          });
+        });
+    } else {
+      this.props.userLoggedOUT({
+        username: "",
+        isLoggedIn: false,
+      });
+      this.props.history.push("/");
+    }
   }
 
   render() {
@@ -69,9 +94,7 @@ class Header extends React.Component {
               >
                 <NavItem>
                   <Link to="/courses">
-                    <NavLink>
-                      <span className="header--link">Courses</span>
-                    </NavLink>
+                    <span className="header--link text-white">Courses</span>
                   </Link>
                 </NavItem>
               </Nav>
@@ -82,24 +105,20 @@ class Header extends React.Component {
                 {isLoggedIn === false ? (
                   <>
                     <NavItem>
-                      <Link to="/register">
-                        <NavLink className="badge badge-danger">
-                          Register
-                        </NavLink>
+                      <Link to="/register" className="badge badge-danger">
+                        Register
                       </Link>
                     </NavItem>
                     <NavItem>
-                      <Link to="/signin">
-                        <NavLink className="badge badge-danger">Login</NavLink>
+                      <Link to="/signin" className="badge badge-danger">
+                        Login
                       </Link>
                     </NavItem>
                   </>
                 ) : (
                   <NavItem>
-                    <Link to="/dashboard">
-                      <NavLink className="badge badge-danger">
-                        Go To Dashbord
-                      </NavLink>
+                    <Link to="/dashboard" className="badge badge-danger">
+                      Go To Dashbord
                     </Link>
                   </NavItem>
                 )}
@@ -116,4 +135,6 @@ const mapStateToProps = ({ user }) => ({
   username: user.user.username,
   isLoggedIn: user.user.isLoggedIn,
 });
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, { userLoggedIn, userLoggedOUT })(
+  withRouter(Header)
+);

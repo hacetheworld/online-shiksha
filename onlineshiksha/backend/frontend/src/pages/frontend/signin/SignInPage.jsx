@@ -30,8 +30,6 @@ class SignIn extends React.Component {
   }
 
   handle_login = (e) => {
-    console.log(this.state);
-
     const data = {
       username: this.state.username,
       password: this.state.password,
@@ -46,14 +44,15 @@ class SignIn extends React.Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
-
         localStorage.setItem("token", json.token);
         this.props.userLoggedIn({
           username: json.user.username,
           isLoggedIn: true,
         });
         this.props.history.push("/dashboard");
+      })
+      .catch((e) => {
+        alert(e.message);
       });
   };
 
@@ -63,8 +62,6 @@ class SignIn extends React.Component {
   };
 
   render() {
-    console.log(this.props, "SignIn");
-
     return (
       <>
         <section className="section section-lg section-shaped">
