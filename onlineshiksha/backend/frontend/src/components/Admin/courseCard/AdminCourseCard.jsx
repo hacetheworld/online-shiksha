@@ -27,7 +27,7 @@ export default function AdminCourseCard() {
         </div>
         <div className="course-card-watchnowbutton">
           <Button className="rounded-0 button-big bg-default text-white">
-            <Link className="text-white" to="/admin/course/123">
+            <Link className="text-white" to="/dashboard/course/123">
               Watch Course &nbsp;
               <i className="fa fa-arrow-right"></i>
             </Link>

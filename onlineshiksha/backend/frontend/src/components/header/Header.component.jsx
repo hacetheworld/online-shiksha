@@ -25,7 +25,8 @@ class Header extends React.Component {
   }
 
   render() {
-    const { username, isLoggedIn } = this.props;
+    const { isLoggedIn } = this.props;
+
     return (
       <header className="header-global">
         <Navbar
@@ -94,7 +95,13 @@ class Header extends React.Component {
                     </NavItem>
                   </>
                 ) : (
-                  <NavItem>{username}</NavItem>
+                  <NavItem>
+                    <Link to="/dashboard">
+                      <NavLink className="badge badge-danger">
+                        Go To Dashbord
+                      </NavLink>
+                    </Link>
+                  </NavItem>
                 )}
               </Nav>
             </UncontrolledCollapse>

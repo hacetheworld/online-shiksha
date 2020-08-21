@@ -3,13 +3,14 @@ import "./App.scss";
 
 //Redux
 import { connect } from "react-redux";
-import { userLoggedIn } from "./redux/actions/user.actions";
+import { userLoggedIn, userLoggedOUT } from "./redux/actions/user.actions";
 // React Router Component
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
 // Frontend component
 import FrontView from "./pages/frontend/frontend";
 import AdminView from "./pages/admin/admin";
+import ProtectedRoute from "./protectedRoute/ProtectedRoute.component";
 
 class App extends React.Component {
   constructor(props) {
@@ -17,9 +18,7 @@ class App extends React.Component {
   }
   componentDidMount() {
     const jsonToken = localStorage.getItem("token");
-    console.log(jsonToken);
-
-    if (jsonToken) {
+    if (jsonToken !== null) {
       fetch("http://localhost:8000/api/current_user/", {
         headers: {
           Authorization: `JWT ${jsonToken}`,
@@ -31,18 +30,21 @@ class App extends React.Component {
             username: json.username,
             isLoggedIn: true,
           });
+          this.props.history.push("/dashboard");
         });
+    } else {
+      this.props.userLoggedOUT({
+        username: "",
+        isLoggedIn: false,
+      });
+      this.props.history.push("/");
     }
   }
   render() {
-    const { isLoggedIn } = this.props;
-
     return (
       <Switch>
-        {isLoggedIn === true ? (
-          <Route path="/admin" render={() => <AdminView />} />
-        ) : null}
-        <Route path="/" render={() => <FrontView />} />
+        <ProtectedRoute path="/dashboard" component={AdminView} />
+        <Route path="/" component={FrontView} />
       </Switch>
     );
   }
@@ -51,4 +53,6 @@ class App extends React.Component {
 const mapStateToProps = (state) => ({
   isLoggedIn: state.user.user.isLoggedIn,
 });
-export default connect(mapStateToProps, { userLoggedIn })(App);
+export default connect(mapStateToProps, { userLoggedIn, userLoggedOUT })(
+  withRouter(App)
+);

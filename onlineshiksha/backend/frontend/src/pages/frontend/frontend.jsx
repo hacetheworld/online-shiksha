@@ -11,26 +11,23 @@ import CoursesPage from "./Courses/CoursesPage";
 import CheckoutPage from "./checkout/CheckoutPage";
 import Register from "./register/RegisterPage";
 import SignIn from "./signin/SignInPage";
+import NotFoundPage from "../404page/404Page";
 
 class FrontView extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
-    const { handle_login, handle_signup, logged_in } = this.props;
     return (
       <>
-        <Header
-          handle_login={this.handle_login}
-          handle_signup={this.handle_signup}
-          logged_in={logged_in}
-        />
+        <Header />
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/courses" component={CoursesPage} />
           <Route exact path="/checkout" component={CheckoutPage} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/signin" component={SignIn} />
+          <Route component={NotFoundPage} />
         </Switch>
         <Footer />
       </>

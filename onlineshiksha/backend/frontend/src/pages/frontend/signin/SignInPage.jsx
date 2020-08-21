@@ -53,6 +53,7 @@ class SignIn extends React.Component {
           username: json.user.username,
           isLoggedIn: true,
         });
+        this.props.history.push("/dashboard");
       });
   };
 

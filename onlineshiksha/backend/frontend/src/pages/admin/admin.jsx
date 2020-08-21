@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import AdminHeader from "../../components/Admin/AdminHeader.component";
 import AdminCoursesPage from "./Course/AdminCoursesPage";
 import WatchCourse from "./WatchCourse/WatchCourse.component";
+import NotFoundPage from "../404page/404Page";
 
 // Reusable Custom Component
 class AdminView extends React.Component {
@@ -13,12 +14,13 @@ class AdminView extends React.Component {
       <div>
         <AdminHeader />
         <Switch>
-          <Route exact path="/admin" component={AdminCoursesPage} />
+          <Route exact path="/dashboard" component={AdminCoursesPage} />
           <Route
             exact
-            path="/admin/course/:course_id"
+            path="/dashboard/course/:course_id"
             component={WatchCourse}
           />
+          <Route component={NotFoundPage} />
         </Switch>
       </div>
     );

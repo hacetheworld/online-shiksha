@@ -3,7 +3,7 @@ import { userActionTypes } from "../actionTypes/userActionTypes";
 const INTIAL_STATE = {
   user: {
     username: "",
-    isLoggedIn: false,
+    isLoggedIn: "",
   },
 };
 

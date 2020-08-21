@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -100,7 +100,10 @@ class AdminHeader extends React.Component {
                 <NavItem>
                   <NavLink
                     className="badge badge-danger button-big"
-                    onClick={this.handle_logout}
+                    onClick={() => {
+                      this.handle_logout();
+                      this.props.history.push("/");
+                    }}
                   >
                     Logout
                   </NavLink>
@@ -118,4 +121,6 @@ const mapStateToProps = (state) => ({
   username: state.user.user.username,
 });
 
-export default connect(mapStateToProps, { userLoggedOUT })(AdminHeader);
+export default connect(mapStateToProps, { userLoggedOUT })(
+  withRouter(AdminHeader)
+);
