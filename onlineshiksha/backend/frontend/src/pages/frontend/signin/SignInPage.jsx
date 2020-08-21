@@ -160,7 +160,7 @@ class SignIn extends React.Component {
                             color="primary"
                             type="submit"
                           >
-                            Register
+                            SignIn
                           </Button>
                         </div>
                       </Form>

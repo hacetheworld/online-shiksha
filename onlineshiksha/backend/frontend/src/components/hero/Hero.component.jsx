@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Hero.style.scss";
 import { Container, Row, Col, Button } from "reactstrap";
 export default function Hero() {
@@ -12,16 +13,22 @@ export default function Hero() {
               Source.
             </h1>
             <div className="hero-btn">
-              <Button
-                className="btn-icon btn rounded-0"
-                color="primary"
-                type="button"
+              <Link
+                to="/courses"
+                className=" bg-danger button-outline text-white"
               >
-                <span className="btn-inner--icon">
-                  <i className="ni ni-atom" />
-                </span>
-                &nbsp; Go To Course
-              </Button>
+                <Button
+                  className="btn-icon btn rounded-0"
+                  color="danger"
+                  size="lg"
+                  type="button"
+                >
+                  <span className="btn-inner--icon">
+                    <i className="ni ni-atom" />
+                  </span>
+                  &nbsp; Go To Course
+                </Button>
+              </Link>
             </div>
           </div>
         </Row>

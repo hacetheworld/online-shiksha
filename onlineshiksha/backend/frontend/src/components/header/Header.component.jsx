@@ -15,6 +15,7 @@ import {
   NavItem,
   NavLink,
   Nav,
+  Button,
   Container,
   Row,
   Col,
@@ -105,20 +106,35 @@ class Header extends React.Component {
                 {isLoggedIn === false ? (
                   <>
                     <NavItem>
-                      <Link to="/register" className="badge badge-danger">
-                        Register
+                      <Link
+                        to="/register"
+                        className=" bg-danger button-outline text-white"
+                      >
+                        <Button color="danger" size="lg" type="button">
+                          Register
+                        </Button>
                       </Link>
                     </NavItem>
                     <NavItem>
-                      <Link to="/signin" className="badge badge-danger">
-                        Login
+                      <Link
+                        to="/signin"
+                        className=" bg-danger button-outline text-white"
+                      >
+                        <Button color="danger" size="lg" type="button">
+                          SignIn
+                        </Button>
                       </Link>
                     </NavItem>
                   </>
                 ) : (
                   <NavItem>
-                    <Link to="/dashboard" className="badge badge-danger">
-                      Go To Dashbord
+                    <Link
+                      to="/dashboard"
+                      className=" bg-danger button-outline text-white"
+                    >
+                      <Button color="danger" size="lg" type="button">
+                        Go To DashBoard
+                      </Button>
                     </Link>
                   </NavItem>
                 )}
