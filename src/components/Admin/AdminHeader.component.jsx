@@ -21,29 +21,7 @@ class AdminHeader extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    const jsonToken = localStorage.getItem("token");
-    if (jsonToken !== null) {
-      fetch("/api/current_user/", {
-        headers: {
-          Authorization: `JWT ${jsonToken}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          this.props.userLoggedIn({
-            username: json.username,
-            isLoggedIn: true,
-          });
-        });
-    } else {
-      this.props.userLoggedOUT({
-        username: "",
-        isLoggedIn: false,
-      });
-      this.props.history.push("/");
-    }
-  }
+
   handle_logout = () => {
     localStorage.removeItem("token");
     this.props.userLoggedOUT({ username: "", isLoggedIn: false });

@@ -33,29 +33,6 @@ class Register extends React.Component {
     };
   }
 
-  componentDidMount() {
-    const tokenExist = localStorage.getItem("token");
-    if (tokenExist !== null) {
-      fetch("/api/current_user/", {
-        headers: {
-          Authorization: `JWT ${tokenExist}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          this.props.userLoggedIn({
-            username: json.username,
-            isLoggedIn: true,
-          });
-        });
-    } else {
-      this.props.userLoggedOUT({
-        username: "",
-        isLoggedIn: false,
-      });
-    }
-  }
-
   handle_signup = (e) => {
     const data = {
       username: this.state.username,

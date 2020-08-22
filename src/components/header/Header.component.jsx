@@ -26,30 +26,6 @@ class Header extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    const jsonToken = localStorage.getItem("token");
-    if (jsonToken !== null) {
-      fetch("/api/current_user/", {
-        headers: {
-          Authorization: `JWT ${jsonToken}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          this.props.userLoggedIn({
-            username: json.username,
-            isLoggedIn: true,
-          });
-        });
-    } else {
-      this.props.userLoggedOUT({
-        username: "",
-        isLoggedIn: false,
-      });
-      this.props.history.push("/");
-    }
-  }
-
   render() {
     const { isLoggedIn } = this.props;
 
