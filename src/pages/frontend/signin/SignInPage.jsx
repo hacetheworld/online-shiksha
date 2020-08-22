@@ -35,7 +35,7 @@ class SignIn extends React.Component {
       password: this.state.password,
     };
     e.preventDefault();
-    fetch("http://127.0.0.1:8000/token-auth/", {
+    fetch("/token-auth/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

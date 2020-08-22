@@ -36,7 +36,7 @@ class Register extends React.Component {
   componentDidMount() {
     const tokenExist = localStorage.getItem("token");
     if (tokenExist !== null) {
-      fetch("http://localhost:8000/api/current_user/", {
+      fetch("/api/current_user/", {
         headers: {
           Authorization: `JWT ${tokenExist}`,
         },

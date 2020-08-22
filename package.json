@@ -20,7 +20,7 @@
     "reactstrap": "^8.5.1",
     "redux": "^4.0.5"
   },
-  "proxy": "http://127.0.0.1:8000/",
+  "proxy": "https://online-shiksha.herokuapp.com/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

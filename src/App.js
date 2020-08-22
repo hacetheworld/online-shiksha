@@ -19,7 +19,7 @@ class App extends React.Component {
   componentDidMount() {
     const jsonToken = localStorage.getItem("token");
     if (jsonToken !== null) {
-      fetch("http://localhost:8000/api/current_user/", {
+      fetch("/api/current_user/", {
         headers: {
           Authorization: `JWT ${jsonToken}`,
         },
