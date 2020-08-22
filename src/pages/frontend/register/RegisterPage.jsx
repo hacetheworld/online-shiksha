@@ -63,7 +63,7 @@ class Register extends React.Component {
       password: this.state.password,
     };
     e.preventDefault();
-    fetch("http://127.0.0.1:8000/api/users/", {
+    fetch("/api/users/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
