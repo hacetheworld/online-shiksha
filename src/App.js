@@ -2,7 +2,7 @@ import React from "react";
 import "./App.scss";
 
 //Redux
-import store from "./redux/store";
+import { store } from "./redux/store";
 import { connect } from "react-redux";
 import { userLoggedIn, userLoggedOUT } from "./redux/actions/user.actions";
 // React Router Component
