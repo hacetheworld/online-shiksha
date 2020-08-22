@@ -17,7 +17,7 @@ import ProtectedRoute from "./protectedRoute/ProtectedRoute.component";
 const jsonToken = localStorage.getItem("token");
 console.log("'i'm running");
 
-if (jsonToken !== null || jsonToken !== undefined) {
+if (jsonToken !== null && jsonToken !== undefined) {
   fetch("/api/current_user/", {
     headers: {
       Authorization: `JWT ${jsonToken}`,
