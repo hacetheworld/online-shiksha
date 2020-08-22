@@ -7,8 +7,9 @@ import { Link } from "react-router-dom";
 import ReactPlayer from "react-player/lazy";
 
 //Import Reactstrap Components
-import { Container, Row, Col, Button } from "reactstrap";
-export default function CourseCard() {
+import { Row, Col, Button } from "reactstrap";
+export default function CourseCard(props) {
+  const { courseName, price, course_ID, features } = props.course;
   return (
     <Col className="col-12 col-md-12 col-lg-6">
       {" "}
@@ -23,52 +24,23 @@ export default function CourseCard() {
           />
         </div>
         <div className="course-card-course-title ">
-          Complete Data Structure and algorithms course-2020
+          <Link to={`course/${course_ID}`}>{courseName}</Link>
         </div>
         <div className="course-card-course-content">
           <Row>
             <Col>
-              <p>
-                <i className="fa fa-check-square-o"></i> High quality video and
-                awesome explanation for every topic
-              </p>
-              <p>
-                <i className="fa fa-check-square-o"></i> High quality video and
-                awesome explanation for every topic
-              </p>
-              <p>
-                <i className="fa fa-check-square-o"></i> High quality video and
-                awesome explanation for every topic
-              </p>
-              <p>
-                <i className="fa fa-check-square-o"></i> High quality video and
-                awesome explanation for every topic
-              </p>
-            </Col>
-
-            <Col>
-              <p>
-                <i className="fa fa-check-square-o"></i> High quality video and
-                awesome explanation for every topic
-              </p>
-              <p>
-                <i className="fa fa-check-square-o"></i> High quality video and
-                awesome explanation for every topic
-              </p>
-              <p>
-                <i className="fa fa-check-square-o"></i> High quality video and
-                awesome explanation for every topic
-              </p>
-              <p>
-                <i className="fa fa-check-square-o"></i> High quality video and
-                awesome explanation for every topic
-              </p>
+              {features.map((feature, id) => (
+                <p key={id}>
+                  <i className="fa fa-check-square-o"></i> {feature}
+                </p>
+              ))}
             </Col>
           </Row>
           <div className="course-card-buynowbutton">
             <Button className="rounded-0 button-big bg-default text-white">
               <Link className="text-white" to="/checkout">
-                Buy Now <span className="text-danger course-price">99 $</span>
+                Buy Now{" "}
+                <span className="text-danger course-price">{price} $</span>
               </Link>
             </Button>
           </div>

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+import datetime
 import django_heroku
 from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,9 +24,10 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'waa%&*cvdl1w4h2%eh0l5s*es)!kp0^y$#da$++$vg3^yoconr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['https://online-shiksha.herokuapp.com/']
+ALLOWED_HOSTS = ['https://online-shiksha.herokuapp.com/',
+                 'http://127.0.0.1:8000/']
 
 
 # Application definition
@@ -133,7 +135,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-REACT_APP_DIR = os.path.join(BASE_DIR, '')
+REACT_APP_DIR = os.path.join(BASE_DIR, 'build')
 
 STATICFILES_DIRS = [
     os.path.join(REACT_APP_DIR, 'build', 'static'),
@@ -160,7 +162,9 @@ REST_FRAMEWORK = {
 
 
 JWT_AUTH = {
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'backend.utils.my_jwt_response_handler'
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'backend.utils.my_jwt_response_handler',
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1)
+
 }
 # // django import
 django_heroku.settings(locals())

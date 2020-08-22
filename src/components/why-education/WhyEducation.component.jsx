@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./WhyEducation.style.scss";
 //Import ReactPlayer Componets
 import ReactPlayer from "react-player/lazy";
@@ -33,9 +34,11 @@ export default function WhyEducation() {
                   to college
                 </p>
               </div>
-              <Button className="btn btn-danger rounded-0">
-                Go to courses <i className="fa fa-arrow-right"></i>
-              </Button>
+              <Link to="/courses">
+                <Button className="btn btn-danger rounded-0">
+                  Go to courses <i className="fa fa-arrow-right"></i>
+                </Button>
+              </Link>
             </div>
           </Col>
           <Col lg="6" className=" col-md-5 col-sm-4">

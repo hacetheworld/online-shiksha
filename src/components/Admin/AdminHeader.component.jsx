@@ -8,7 +8,6 @@ import {
   NavbarBrand,
   Navbar,
   NavItem,
-  NavLink,
   Nav,
   Container,
   Row,
@@ -28,8 +27,6 @@ class AdminHeader extends React.Component {
   };
   render() {
     const { username } = this.props;
-    console.log(this.props);
-
     return (
       <>
         {/* Navbar primary */}

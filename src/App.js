@@ -15,7 +15,15 @@ import ProtectedRoute from "./protectedRoute/ProtectedRoute.component";
 
 // Authenticate
 const jsonToken = localStorage.getItem("token");
-console.log("'i'm running");
+// console.log("'i'm running");
+
+// logged out after 1 day
+setTimeout(() => {
+  userLoggedIn({
+    username: "",
+    isLoggedIn: false,
+  });
+}, 86400000);
 
 if (jsonToken !== null && jsonToken !== undefined) {
   fetch("/api/current_user/", {
