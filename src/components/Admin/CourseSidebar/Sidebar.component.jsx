@@ -1,21 +1,12 @@
 import React from "react";
 import "./Sidebar.style.scss";
 import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import { connect } from "react-redux";
+import { playCurrentVideo } from "../../../redux/actions/course.action";
 
-// import { Link } from "react-router-dom";
-// import {
-//   UncontrolledCollapse,
-//   NavbarBrand,
-//   Navbar,
-//   NavItem,
-//   NavLink,
-//   Nav,
-//   Container,
-//   Row,
-//   Col,
-// } from "reactstrap";
-
-export default function Sidebar() {
+function Sidebar(props) {
+  const course = props.current_course;
+  const { playCurrentVideo } = props;
   return (
     <div className="sidebar">
       <ProSidebar width={"70%"} className="sidebar-prosidebar">
@@ -24,34 +15,34 @@ export default function Sidebar() {
             className="bold"
             style={{ fontSize: "18px", fontWeight: 700 }}
           >
-            Course Title Here
+            {course.courseName}
           </MenuItem>
-          <SubMenu title="Data Structure Basics">
-            <MenuItem>
-              <i className="fa fa-play-circle-o"></i> Video One{" "}
-            </MenuItem>
-            <MenuItem>
-              <i className="fa fa-play-circle-o"></i> Video Two{" "}
-            </MenuItem>{" "}
-          </SubMenu>
-          <SubMenu title="Data Structure Medium">
-            <MenuItem>
-              <i className="fa fa-play-circle-o"></i> Video One{" "}
-            </MenuItem>
-            <MenuItem>
-              <i className="fa fa-play-circle-o"></i> Video Two{" "}
-            </MenuItem>{" "}
-          </SubMenu>
-          <SubMenu title="Data Structure Advanced">
-            <MenuItem>
-              <i className="fa fa-play-circle-o"></i> Video One{" "}
-            </MenuItem>
-            <MenuItem>
-              <i className="fa fa-play-circle-o"></i> Video Two{" "}
-            </MenuItem>{" "}
-          </SubMenu>
+          {course.content.map((course_content, id) => {
+            return (
+              <SubMenu key={id} title={course_content.sectionName}>
+                {course_content.videosContent.map((course_video, new_key) => {
+                  return (
+                    <MenuItem
+                      key={new_key}
+                      onClick={() => {
+                        playCurrentVideo({
+                          title: course_video.title,
+                          url: course_video.videoUrl,
+                        });
+                      }}
+                    >
+                      <i className="fa fa-play-circle-o"></i>{" "}
+                      {course_video.title}
+                    </MenuItem>
+                  );
+                })}
+              </SubMenu>
+            );
+          })}
         </Menu>
       </ProSidebar>
     </div>
   );
 }
+
+export default connect(null, { playCurrentVideo })(Sidebar);

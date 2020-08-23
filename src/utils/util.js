@@ -3,3 +3,11 @@ export const getTotal = (courses) => {
   courses.map((course) => (total += course.price));
   return total;
 };
+
+export const getCurrentCourse = (courses, course_ID) => {
+  for (let i = 0; i < courses.length; i++) {
+    if (courses[i].course_ID === course_ID) {
+      return courses[i];
+    }
+  }
+};

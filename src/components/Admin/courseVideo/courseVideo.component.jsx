@@ -1,21 +1,28 @@
 import React from "react";
 import "./courseVideo.scss";
-// import { Link } from "react-router-dom";
-// import { Container, Row } from "reactstrap";
+import { connect } from "react-redux";
 import ReactPlayer from "react-player/lazy";
-export default function CourseVideoContent(props) {
-  // const { course_id } = props;
+
+function CourseVideoContent(props) {
+  const { CURRENT_VIDEO } = props;
   return (
     <div className="course-content mt-lg">
+      <p>{CURRENT_VIDEO.title}</p>
       <div className="player-wrapper course-card-preview-video">
         <ReactPlayer
           width="100%"
           height="100%"
           controls={true}
           className="react-player "
-          url="https://www.youtube.com/watch?v=riGtbrlCdxs"
+          url={CURRENT_VIDEO.url}
         />
       </div>
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  CURRENT_VIDEO: state.courses.CURRENT_VIDEO,
+});
+
+export default connect(mapStateToProps)(CourseVideoContent);
