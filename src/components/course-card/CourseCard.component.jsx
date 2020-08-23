@@ -2,14 +2,19 @@ import React from "react";
 import "./CourseCard.style.scss";
 
 // React Router
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+
+//Redux
+import { connect } from "react-redux";
+import { addToCart } from "../../redux/actions/course.action";
 //Import ReactPlayer Componets
 import ReactPlayer from "react-player/lazy";
 
 //Import Reactstrap Components
 import { Row, Col, Button } from "reactstrap";
-export default function CourseCard(props) {
+function CourseCard(props) {
   const { courseName, price, course_ID, features } = props.course;
+  let course = { course_ID, courseName, price };
   return (
     <Col className="col-12 col-md-12 col-lg-6">
       {" "}
@@ -37,8 +42,14 @@ export default function CourseCard(props) {
             </Col>
           </Row>
           <div className="course-card-buynowbutton">
-            <Button className="rounded-0 button-big bg-default text-white">
-              <Link className="text-white" to="/checkout">
+            <Button
+              className="rounded-0 button-big bg-default text-white"
+              onClick={() => {
+                props.addToCart(course);
+                props.history.push("/checkout");
+              }}
+            >
+              <Link className="text-white">
                 Buy Now{" "}
                 <span className="text-danger course-price">{price} $</span>
               </Link>
@@ -49,3 +60,5 @@ export default function CourseCard(props) {
     </Col>
   );
 }
+
+export default connect(null, { addToCart })(withRouter(CourseCard));

@@ -12,6 +12,7 @@ import CheckoutPage from "./checkout/CheckoutPage";
 import Register from "./register/RegisterPage";
 import SignIn from "./signin/SignInPage";
 import NotFoundPage from "../404page/404Page";
+import ProtectedRoute from "../../protectedRoute/ProtectedRoute.component";
 
 class FrontView extends React.Component {
   constructor(props) {
@@ -24,7 +25,13 @@ class FrontView extends React.Component {
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/courses" component={CoursesPage} />
-          <Route exact path="/checkout" component={CheckoutPage} />
+          {/* <Route exact path="/checkout" component={CheckoutPage} /> */}
+          <ProtectedRoute
+            exact
+            path="/checkout"
+            component={CheckoutPage}
+            componentToRedirect="/signin"
+          />
           <Route exact path="/register" component={Register} />
           <Route exact path="/signin" component={SignIn} />
           <Route component={NotFoundPage} />

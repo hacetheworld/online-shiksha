@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import ReactPlayer from "react-player/lazy";
 
 //Import Reactstrap Components
-import { Container, Row, Col, Button } from "reactstrap";
+import { Col, Button } from "reactstrap";
 export default function AdminCourseCard() {
   return (
     <Col className="col-12 col-md-12 col-lg-6">

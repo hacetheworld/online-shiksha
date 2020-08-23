@@ -4,16 +4,13 @@ import { Link, withRouter } from "react-router-dom";
 
 // use Redux
 import { connect } from "react-redux";
-import { userLoggedIn, userLoggedOUT } from "../../redux/actions/user.actions";
-// JavaScript plugin that hides or shows a component based on your scroll
-// import Headroom from "headroom.js";
-// reactstrap components
+// import { userLoggedIn, userLoggedOUT } from "../../redux/actions/user.actions";
+
 import {
   UncontrolledCollapse,
   NavbarBrand,
   Navbar,
   NavItem,
-  NavLink,
   Nav,
   Button,
   Container,
@@ -127,6 +124,4 @@ const mapStateToProps = ({ user }) => ({
   username: user.user.username,
   isLoggedIn: user.user.isLoggedIn,
 });
-export default connect(mapStateToProps, { userLoggedIn, userLoggedOUT })(
-  withRouter(Header)
-);
+export default connect(mapStateToProps)(withRouter(Header));

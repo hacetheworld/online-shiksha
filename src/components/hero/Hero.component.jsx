@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Hero.style.scss";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Button } from "reactstrap";
 export default function Hero() {
   return (
     <div className="hero-section">

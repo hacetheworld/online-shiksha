@@ -1,20 +1,20 @@
 import React from "react";
 import "./checkout-item.styles.scss";
 
-const CheckoutItem = () => {
+const CheckoutItem = ({ courseData }) => {
   return (
     <tr>
-      <td>1</td>
-      <td>
+      <td>{courseData.course_ID}</td>
+      {/* <td>
         <div className=" image-container">
           <img src={require("../../assets/img/brand/blue.png")} alt="item" />
         </div>
+      </td> */}
+      <td>
+        <span className="name">{courseData.courseName}</span>
       </td>
       <td>
-        <span className="name">Data Structure and Algorithms</span>
-      </td>
-      <td>
-        <span className="price">$ 99</span>
+        <span className="price">$ {courseData.price}</span>
       </td>
       <td>
         <div className="remove-button">&#10005;</div>
