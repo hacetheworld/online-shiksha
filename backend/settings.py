@@ -140,7 +140,7 @@ REACT_APP_DIR = os.path.join(BASE_DIR, 'build')
 
 STATICFILES_DIRS = [
     # os.path.join(REACT_APP_DIR, 'build', 'static'),
-    os.path.join(REACT_APP_DIR, 'build/static'),
+    os.path.join(REACT_APP_DIR, 'static'),
 
 ]
 # If this is used then `CORS_ORIGIN_WHITELIST` will not have any effect
